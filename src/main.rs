@@ -13,7 +13,7 @@ fn main() {
         100.50,
     );
 
-    let tx_list = vec![first_tx];
+    let tx_list = vec![first_tx.clone()];
     let blockchain = Blockchain::new();
     let first_block = Block::new(
         1,
@@ -23,5 +23,5 @@ fn main() {
 
 
 
-    println!("Successfully created {:?}", first_tx);
+    println!("Successfully created {:?}", &first_tx);
 }
