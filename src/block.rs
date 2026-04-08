@@ -18,13 +18,17 @@ pub struct Block{
 
 impl Block {
     pub fn new(index: u64, transactions: Vec<Transaction>, prev: String) -> Self{
-        Block{
+        let mut new_block = Block{
             index, 
             transactions,
             prev,
             hash: String::new(),
             timestamp: 0,
-        }
+        };
+
+        new_block.hash = new_block.calc_hash();
+
+        new_block
     }
 
     pub fn calc_hash(&self) -> String{
@@ -40,6 +44,6 @@ impl Block {
         hasher.update(block_data.as_bytes());
 
         let result = hasher.finalize();
-        return hex_to_string(result).expect("Failed to encode");
+        hex_string(&result)
     }
 }
