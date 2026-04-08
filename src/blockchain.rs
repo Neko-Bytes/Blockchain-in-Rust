@@ -6,12 +6,14 @@ use crate::transaction::Transaction;
 
 pub struct Blockchain{
     pub chain: Vec<Block>,
+    pub diff: usize,
 }
 
 impl Blockchain{
     pub fn new() -> Self{
         let mut blockchain = Blockchain{
             chain: Vec::new(),
+            diff: 2,
         };
 
         blockchain.create_genesis_block();
@@ -33,7 +35,9 @@ impl Blockchain{
         let new_index = prev_block.index + 1;
         let prev_hash = prev_block.hash.clone();
 
-        let new_block = Block::new(new_index, transactions, prev_hash);
+        let mut new_block = Block::new(new_index, transactions, prev_hash);
+
+        new_block.mine_block(self.diff);
 
         self.chain.push(new_block);
     }
