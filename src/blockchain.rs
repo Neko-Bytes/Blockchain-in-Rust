@@ -41,4 +41,29 @@ impl Blockchain{
 
         self.chain.push(new_block);
     }
+
+    pub fn is_chain_valid(&self) -> bool {
+        for i in 1..self.chain.len(){
+            let current_block = &self.chain[i];
+            let prev_block = &self.chain[i - 1];
+
+            if current_block.hash != current_block.calc_hash() {
+                println!("SECURITY BREACH: Block {} data was tampered", i);
+                return false;
+            }
+
+            if prev_block.hash != current_block.hash {
+                println!("SECURITY BREACH: Block {} is not linked to Block {}", i, i-1);
+                return false;
+            }
+
+            if !current_block.hash.starts_with(&"0".repeat(self.diff)){
+                println!("SECURITY BREACH: Block {} was not mined", i);
+                return false;
+            }
+        }
+
+        println!("The chain is valid and secure");
+        true
+    }
 }

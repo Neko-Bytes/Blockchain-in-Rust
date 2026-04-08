@@ -39,7 +39,6 @@ impl Block {
         write!(&mut block_data, "{}|", self.index).expect("Failed to write index");
         write!(&mut block_data, "{:?}|", self.transactions).expect("Failed to write transactions");
         write!(&mut block_data, "{}|", self.prev).expect("Failed to write prev hash");
-        write!(&mut block_data, "{}|", self.hash).expect("Failed to write hash");
         write!(&mut block_data, "{}|", self.timestamp).expect("Failed to write timestamp");
         write!(&mut block_data, "{}", self.nonce).expect("Failed to write nonce");
 
@@ -53,7 +52,7 @@ impl Block {
     pub fn mine_block(&mut self, diff: usize){
         let target = "0".repeat(diff);
 
-        while self.hash.starts_with(&target) {
+        while !self.hash.starts_with(&target) {
             self.nonce += 1;
             self.hash = self.calc_hash();
         }
