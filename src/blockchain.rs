@@ -1,12 +1,15 @@
 use crate::block::Block;
 use crate::transaction::Transaction;
 
+use serde::{Serialize, Deserialize};
+
 #[allow(dead_code)]
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 
 pub struct Blockchain{
     pub chain: Vec<Block>,
     pub diff: usize,
+    pub mempool: Vec<Transaction>,
 }
 
 impl Blockchain{
@@ -14,6 +17,7 @@ impl Blockchain{
         let mut blockchain = Blockchain{
             chain: Vec::new(),
             diff: 2,
+            mempool: Vec::new(),
         };
 
         blockchain.create_genesis_block();

@@ -1,12 +1,13 @@
-use std::fmt::format;
 use faster_hex::hex_string;
 use std::fmt::Write;
 
 use crate::transaction::Transaction;
 use sha2::{Sha256, Digest};
 
+use serde::{Serialize, Deserialize};
+
 #[allow(dead_code)]
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 
 pub struct Block{
     pub index: u64,
